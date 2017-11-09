@@ -21,7 +21,10 @@ class Ideas extends \IdeaManager\Entity\CustomPostType
         $this->addTaxonomy(
             __('Status', 'idea-manager'),
             __('Statuses', 'idea-manager'),
-            'idea_statuses'
+            'idea_statuses',
+            array(
+                'hierarchical'  => true,
+            )
         );
     }
 }
