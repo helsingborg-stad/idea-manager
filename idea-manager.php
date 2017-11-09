@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Plugin Name:       Idea manager
+ * Plugin Name:       Idea Manager
  * Plugin URI:        https://github.com/helsingborg-stad/idea-manager
  * Description:       Plugin to gather and manage ideas
  * Version:           1.0.0
