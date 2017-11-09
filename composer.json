@@ -1,0 +1,14 @@
+{
+    "name": "helsingborg-stad/idea-manager",
+    "description": "Plugin to gather and manage ideas",
+    "type": "wordpress-plugin",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Jonatan Hanson",
+            "email": "jonatan.hanson@hiq.se"
+        }
+    ],
+    "require": {
+    }
+}
