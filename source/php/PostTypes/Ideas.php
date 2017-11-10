@@ -11,9 +11,16 @@ class Ideas extends \IdeaManager\Entity\CustomPostType
             __('Ideas', 'idea-manager'),
             'idea',
             array(
+                'public'        => true,
+                'show_ui'       => true,
                 'menu_icon'     => 'dashicons-lightbulb',
-                'hierarchical'  => true,
-                'supports'      => array('title', 'revisions', 'editor', 'thumbnail'),
+                'rewrite'              =>   array(
+                    'slug'       =>   'idea',
+                    'with_front' =>   false
+                ),
+                'has_archive'   => true,
+                'hierarchical'  => false,
+                'supports'      => array('title', 'revisions', 'thumbnail', 'author'),
             )
         );
 

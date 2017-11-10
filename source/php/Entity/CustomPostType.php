@@ -67,7 +67,6 @@ class CustomPostType
                 'show_ui'              => true,
                 'supports'             => array('title', 'editor'),
                 'show_in_nav_menus'    => true,
-                '_builtin'             => false,
             ),
 
             // Given args
