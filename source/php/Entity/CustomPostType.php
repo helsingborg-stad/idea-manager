@@ -25,7 +25,7 @@ class CustomPostType
         $this->post_type_labels = $labels;
 
         if (!post_type_exists($slug)) {
-        	add_action('init', array(&$this, 'registerPostType'));
+        	add_action('init', array($this, 'registerPostType'));
         }
     }
 
@@ -141,10 +141,10 @@ class CustomPostType
                 );
             } else {
                 add_action('init',
-                            function () use ($slug, $post_type) {
-                                register_taxonomy_for_object_type($slug, $post_type);
-                            }
-                        );
+                    function () use ($slug, $post_type) {
+                        register_taxonomy_for_object_type($slug, $post_type);
+                    }
+                );
             }
         }
     }
