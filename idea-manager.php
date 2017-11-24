@@ -26,6 +26,21 @@ load_plugin_textdomain('idea-manager', false, plugin_basename(dirname(__FILE__))
 
 require_once IDEAMANAGER_PATH . 'source/php/Vendor/Psr4ClassLoader.php';
 require_once IDEAMANAGER_PATH . 'Public.php';
+if (file_exists(IDEAMANAGER_PATH . 'vendor/autoload.php')) {
+    require_once IDEAMANAGER_PATH . 'vendor/autoload.php';
+}
+
+// Acf auto import and export
+add_action('plugins_loaded', function () {
+    $acfExportManager = new \AcfExportManager\AcfExportManager();
+    $acfExportManager->setTextdomain('idea-manager');
+    $acfExportManager->setExportFolder(IDEAMANAGER_PATH . 'acf-fields/');
+    $acfExportManager->autoExport(array(
+        'idea_status' => 'group_5a134a48de846',
+		'administration_unit' => 'group_5a134bb83af1a'
+    ));
+    $acfExportManager->import();
+});
 
 // Instantiate and register the autoloader
 $loader = new IdeaManager\Vendor\Psr4ClassLoader();
