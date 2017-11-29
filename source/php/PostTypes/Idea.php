@@ -21,6 +21,7 @@ class Idea extends \ModularityFormBuilder\PostType
         $this->taxonomyTags();
 
         add_action('save_post_' . $this->postTypeSlug, array($this, 'setDefaultData'));
+        add_filter('wp_insert_post_data', array($this, 'allowComments'), 99, 2);
     }
 
     /**
@@ -182,6 +183,20 @@ class Idea extends \ModularityFormBuilder\PostType
     }
 
     /**
+     * Allow comments by default for this post type
+     * @param  array $data    [description]
+     * @param  array $postarr [description]
+     * @return array          Modified data list
+     */
+    public function allowComments($data, $postarr) {
+        if ($data['post_type'] == $this->postTypeSlug) {
+            $data['comment_status'] = 'open';
+        }
+
+        return $data;
+    }
+
+    /**
      * Table columns
      * @param  array $columns
      * @return array
@@ -194,5 +209,4 @@ class Idea extends \ModularityFormBuilder\PostType
             'date' => __('Date')
         );
     }
-
 }
