@@ -18,9 +18,9 @@ class Idea extends \ModularityFormBuilder\PostType
         add_action('init', array($this, 'register'));
         $this->taxonomyStatus();
         $this->taxonomyAdministrationUnit();
-        add_action('save_post_' . $this->postTypeSlug, array($this, 'setDefaultData'));
+        $this->taxonomyTags();
 
-        remove_action('plugins_loaded', array($this, 'formFilter'), 11);
+        add_action('save_post_' . $this->postTypeSlug, array($this, 'setDefaultData'));
     }
 
     /**
@@ -47,12 +47,12 @@ class Idea extends \ModularityFormBuilder\PostType
         $args = array(
             'labels'              => $labels,
             'hierarchical'        => false,
-            'description'         => 'Modularity Form Builder Ideas',
+            'description'         => 'Post type for managing ideas',
             'public'              => true,
             'show_ui'             => true,
             'show_in_menu'        => true,
             'show_in_admin_bar'   => false,
-            'menu_position'       => 500,
+            'menu_position'       => 50,
             'menu_icon'           => 'dashicons-lightbulb',
             'show_in_nav_menus'   => false,
             'publicly_queryable'  => true,
@@ -60,13 +60,13 @@ class Idea extends \ModularityFormBuilder\PostType
             'has_archive'         => true,
             'query_var'           => true,
             'can_export'          => true,
-            'rewrite'             => false,
+            'rewrite'             => true,
             'capability_type'     => 'post',
             'capabilities' => array(
                 'create_posts'       => 'do_not_allow',
             ),
             'map_meta_cap'        => true,
-            'supports'            => array('title', 'author')
+            'supports'            => array('title', 'author', 'editor', 'comments')
         );
 
         register_post_type($this->postTypeSlug, $args);
@@ -134,6 +134,34 @@ class Idea extends \ModularityFormBuilder\PostType
         //Add filter
         new \ModularityFormBuilder\Entity\Filter(
             $taxonomyAdminUnit->slug,
+            $this->postTypeSlug
+        );
+    }
+
+    /**
+     * Create tags taxonomy
+     * @return string
+     */
+    public function taxonomyTags()
+    {
+        // Register new taxonomy
+        $taxonomyStatus = new \ModularityFormBuilder\Entity\Taxonomy(
+            __('Tag', 'idea-manager'),
+            __('Tags', 'idea-manager'),
+            'idea_tags',
+            array($this->postTypeSlug),
+            array(
+                'hierarchical'      => false,
+                'public'            => true,
+                'show_ui'           => true,
+                'show_in_nav_menus' => true,
+                '_builtin'          => false,
+            )
+        );
+
+        //Add filter
+        new \ModularityFormBuilder\Entity\Filter(
+            $taxonomyStatus->slug,
             $this->postTypeSlug
         );
     }
