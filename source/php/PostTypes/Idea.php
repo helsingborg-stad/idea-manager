@@ -67,7 +67,7 @@ class Idea extends \ModularityFormBuilder\PostType
                 'create_posts'       => 'do_not_allow',
             ),
             'map_meta_cap'        => true,
-            'supports'            => array('title', 'author', 'editor', 'comments')
+            'supports'            => array('title', 'author', 'editor', 'comments', 'thumbnail')
         );
 
         register_post_type($this->postTypeSlug, $args);
@@ -94,7 +94,7 @@ class Idea extends \ModularityFormBuilder\PostType
             )
         );
 
-        // Remove deafult UI
+        // Remove default UI
         add_action('admin_menu', function () {
             remove_meta_box('tagsdiv-idea_statuses', $this->postTypeSlug, 'side');
         });
@@ -127,7 +127,7 @@ class Idea extends \ModularityFormBuilder\PostType
             )
         );
 
-        // Remove deafult UI
+        // Remove default UI
         add_action('admin_menu', function () {
             remove_meta_box('tagsdiv-idea_administration_units', $this->postTypeSlug, 'side');
         });
