@@ -20,7 +20,7 @@ class Idea extends \ModularityFormBuilder\PostType
         $this->taxonomyAdministrationUnit();
         $this->taxonomyTags();
 
-        add_action('save_post_' . $this->postTypeSlug, array($this, 'setDefaultData'));
+        add_action('save_post_' . $this->postTypeSlug, array($this, 'setDefaultData'), 10, 3);
         add_filter('wp_insert_post_data', array($this, 'allowComments'), 99, 2);
     }
 
@@ -167,14 +167,19 @@ class Idea extends \ModularityFormBuilder\PostType
         );
     }
 
-    public function setDefaultData($postId)
+    public function setDefaultData($postId, $post, $update)
     {
         $currentUser = wp_get_current_user();
-        $post = get_post($postId);
 
-        if ($post->post_date == $post->post_modified) {
+        if (!$update) {
             // Set default status
-            $terms = wp_set_object_terms($postId, 'Ej läst', 'idea_statuses');
+            wp_set_object_terms($postId, 'Ej läst', 'idea_statuses');
+            // Hide Share icons
+            update_field('field_56c33d008efe3', false, $postId);
+            // Hide Author
+            update_field('field_56cadc4e0480b', false, $postId);
+            // Hide Author image
+            update_field('field_56cadc7b0480c', false, $postId);
 
             // @TODO Save Users Administration unit
             // if (class_exists('\\Intranet\\User\\AdministrationUnits')) {
