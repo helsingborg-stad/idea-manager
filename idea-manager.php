@@ -20,7 +20,7 @@ if (! defined('WPINC')) {
 
 define('IDEAMANAGER_PATH', plugin_dir_path(__FILE__));
 define('IDEAMANAGER_URL', plugins_url('', __FILE__));
-define('IDEAMANAGER_TEMPLATE_PATH', IDEAMANAGER_PATH . 'templates/');
+define('IDEAMANAGER_TEMPLATE_PATH', IDEAMANAGER_PATH . 'views/');
 
 load_plugin_textdomain('idea-manager', false, plugin_basename(dirname(__FILE__)) . '/languages');
 

@@ -6,8 +6,7 @@ class App
 {
     public function __construct()
     {
-        add_action('admin_enqueue_scripts', array($this, 'enqueueStyles'));
-        add_action('admin_enqueue_scripts', array($this, 'enqueueScripts'));
+        add_filter('Municipio/blade/view_paths', array($this, 'addTemplatePaths'));
 
         add_action('plugins_loaded', function () {
             if (class_exists('\\ModularityFormBuilder\\PostType')) {
@@ -17,20 +16,13 @@ class App
     }
 
     /**
-     * Enqueue required style
-     * @return void
+     * Add searchable blade template paths
+     * @param array  $array Template paths
+     * @return array        Modified template paths
      */
-    public function enqueueStyles()
+    public function addTemplatePaths($array)
     {
-
-    }
-
-    /**
-     * Enqueue required scripts
-     * @return void
-     */
-    public function enqueueScripts()
-    {
-
+        $array[] = IDEAMANAGER_TEMPLATE_PATH;
+        return $array;
     }
 }

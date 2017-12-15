@@ -22,6 +22,57 @@ class Idea extends \ModularityFormBuilder\PostType
 
         add_action('save_post_' . $this->postTypeSlug, array($this, 'setDefaultData'), 10, 3);
         add_filter('wp_insert_post_data', array($this, 'allowComments'), 99, 2);
+
+        add_filter('dynamic_sidebar_before', array($this, 'contentBeforeSidebar'));
+        add_filter('is_active_sidebar', array($this, 'isActiveSidebar'), 11, 2);
+    }
+
+    public function isIdeaPage()
+    {
+        global $post;
+
+        if (is_object($post) && $post->post_type == $this->postTypeSlug && !is_archive() && !is_admin()) {
+            return true;
+        }
+
+        return false;
+    }
+
+    /**
+     * Activate right sidebar
+     * @param  boolean  $isActiveSidebar Original response
+     * @param  string   $sidebar         Sidebar id
+     * @return boolean
+     */
+    public function isActiveSidebar($isActiveSidebar, $sidebar)
+    {
+        if ($sidebar === 'right-sidebar' && $this->isIdeaPage()) {
+            return true;
+        }
+
+       return $isActiveSidebar;
+    }
+
+    /**
+     * Position: Before Sidebar
+     */
+    public function contentBeforeSidebar($sidebar)
+    {
+        global $post;
+
+        if ($sidebar === 'right-sidebar' && $this->isIdeaPage()) {
+            $data = $this->gatherFormData($post);
+            $data['showSocial'] = get_field('post_show_share', $post->ID);
+            $data['showAuthor'] = get_field('post_show_author', $post->ID) && $post->post_author > 0;
+            $data['units'] = !is_wp_error(wp_get_post_terms($post->ID, 'idea_administration_units')) ? wp_get_post_terms($post->ID, 'idea_administration_units') : null;
+            $uploadFolder = wp_upload_dir();
+            $data['uploadFolder'] = $uploadFolder['baseurl'] . '/modularity-form-builder/';
+
+            $template = new \Municipio\template;
+            $view = \Municipio\Helper\Template::locateTemplate('widgets.blade.php', array(IDEAMANAGER_TEMPLATE_PATH));
+            $view = $template->cleanViewPath($view);
+            $template->render($view, $data);
+        }
     }
 
     /**
