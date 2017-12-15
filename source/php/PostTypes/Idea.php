@@ -22,9 +22,9 @@ class Idea extends \ModularityFormBuilder\PostType
 
         add_action('save_post_' . $this->postTypeSlug, array($this, 'setDefaultData'), 10, 3);
         add_filter('wp_insert_post_data', array($this, 'allowComments'), 99, 2);
-
         add_filter('dynamic_sidebar_before', array($this, 'contentBeforeSidebar'));
         add_filter('is_active_sidebar', array($this, 'isActiveSidebar'), 11, 2);
+        add_filter('ModularityFormBuilder/excluded_fields/front', array($this, 'excludedFields'), 10, 3);
     }
 
     public function isIdeaPage()
@@ -265,4 +265,16 @@ class Idea extends \ModularityFormBuilder\PostType
             'date' => __('Date')
         );
     }
+
+    public function excludedFields($exclude, $postType, $postId)
+    {
+        if ($postType === $this->postTypeSlug) {
+            $exclude[] = 'file_upload';
+            $exclude[] = 'sender-address';
+            $exclude[] = 'input';
+        }
+
+        return $exclude;
+    }
+
 }
