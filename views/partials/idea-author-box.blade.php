@@ -5,8 +5,8 @@
                 <img src="{{ get_avatar_url(get_the_author_meta('ID')) }}" alt="{{ get_the_author_meta('nicename') }}" class="box-image">
             @endif
             <div class="box-content">
-                @if (!empty(get_the_author_meta('first_name')) && !empty(get_the_author_meta('last_name')))
-                    <h5>{{ get_the_author_meta('first_name') }} {{ get_the_author_meta('last_name') }}</h5>
+                @if (!empty(get_the_author_meta('first_name', $author_id)) && !empty(get_the_author_meta('last_name', $author_id)))
+                    <h5>{{ get_the_author_meta('first_name', $author_id) }} {{ get_the_author_meta('last_name', $author_id) }}</h5>
                 @else
                     <h5>{{ get_the_author() }}</h5>
                 @endif
