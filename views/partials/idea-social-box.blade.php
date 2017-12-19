@@ -21,11 +21,10 @@
                     </a>
                 </div>
                 <div class="grid-md-3">
-                    <a class="share-social-email" data-action="share-email" href="#modal-target-{{ the_ID() }}" data-tooltip="<?php _e('Share as e-mail', 'municipio'); ?>">
+                    <a class="share-social-email" data-action="share-email" href="#modal-target-{{ get_the_ID() }}" data-tooltip="<?php _e('Share as e-mail', 'municipio'); ?>">
                         <i class="pricon pricon-email"></i>
                         <span><?php _e('Share with e-mail', 'municipio'); ?></span>
                     </a>
-                    @include('partials.share-email-form')
                 </div>
             </div>
         </div>
