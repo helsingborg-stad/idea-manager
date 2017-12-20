@@ -39,14 +39,14 @@ class Idea extends \ModularityFormBuilder\PostType
     }
 
     /**
-     * Activate right sidebar
+     * Manually activate right and bottom sidebar to add custom content
      * @param  boolean  $isActiveSidebar Original response
      * @param  string   $sidebar         Sidebar id
      * @return boolean
      */
     public function isActiveSidebar($isActiveSidebar, $sidebar)
     {
-        if ($sidebar === 'right-sidebar' && $this->isIdeaPage()) {
+        if (($sidebar === 'right-sidebar' || $sidebar === 'bottom-sidebar') && $this->isIdeaPage()) {
             return true;
         }
 
@@ -54,7 +54,8 @@ class Idea extends \ModularityFormBuilder\PostType
     }
 
     /**
-     * Position: Before Sidebar
+     * Render custom content in sidebar
+     * @param string $sidebar
      */
     public function contentBeforeSidebar($sidebar)
     {
@@ -68,10 +69,9 @@ class Idea extends \ModularityFormBuilder\PostType
             $uploadFolder = wp_upload_dir();
             $data['uploadFolder'] = $uploadFolder['baseurl'] . '/modularity-form-builder/';
 
-            $template = new \Municipio\template;
-            $view = \Municipio\Helper\Template::locateTemplate('widgets.blade.php', array(IDEAMANAGER_TEMPLATE_PATH));
-            $view = $template->cleanViewPath($view);
-            $template->render($view, $data);
+            $this->renderBlade('idea-widgets.blade.php', array(IDEAMANAGER_TEMPLATE_PATH), $data);
+        } elseif ($sidebar === 'bottom-sidebar' && $this->isIdeaPage()) {
+            $this->renderBlade('idea-mail-modal.blade.php', array(IDEAMANAGER_TEMPLATE_PATH));
         }
     }
 
