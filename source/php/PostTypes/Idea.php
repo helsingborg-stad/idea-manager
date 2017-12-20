@@ -224,8 +224,6 @@ class Idea extends \ModularityFormBuilder\PostType
 
     public function setDefaultData($postId, $post, $update)
     {
-        $currentUser = wp_get_current_user();
-
         if (!$update) {
             // Set default status
             wp_set_object_terms($postId, 'Ej läst', 'idea_statuses');
@@ -236,9 +234,21 @@ class Idea extends \ModularityFormBuilder\PostType
             // Hide Author image
             update_field('field_56cadc7b0480c', false, $postId);
 
-            // @TODO Save Users Administration unit
-            // if (class_exists('\\Intranet\\User\\AdministrationUnits')) {
-            // }
+            // Save administration unit
+            if (class_exists('\\Intranet\\User\\AdministrationUnits')) {
+                $unit = \Intranet\User\AdministrationUnits::getUsersAdministrationUnitIntranet();
+                if ($unit) {
+                    $term = term_exists($unit->name, 'idea_administration_units');
+                    if ($term !== 0 && $term !== null) {
+                        wp_set_object_terms($postId, (int)$term['term_id'], 'idea_administration_units');
+                    } else {
+                        $newTerm = wp_insert_term($unit->name, 'idea_administration_units');
+                        if (!is_wp_error($newTerm)) {
+                            wp_set_object_terms($postId, (int)$newTerm['term_id'], 'idea_administration_units');
+                        }
+                    }
+                }
+            }
         }
     }
 
