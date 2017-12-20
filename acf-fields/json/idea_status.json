@@ -31,11 +31,6 @@
                 "param": "post_type",
                 "operator": "==",
                 "value": "idea"
-            },
-            {
-                "param": "current_user_role",
-                "operator": "==",
-                "value": "administrator"
             }
         ]
     ],

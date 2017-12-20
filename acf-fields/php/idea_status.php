@@ -3,7 +3,7 @@
 if (function_exists('acf_add_local_field_group')) {
     acf_add_local_field_group(array(
     'key' => 'group_5a134a48de846',
-    'title' => 'Status',
+    'title' => __('Status', 'idea-manager'),
     'fields' => array(
         0 => array(
             'key' => 'field_5a134c0718f79',
@@ -34,11 +34,6 @@
                 'param' => 'post_type',
                 'operator' => '==',
                 'value' => 'idea',
-            ),
-            1 => array(
-                'param' => 'current_user_role',
-                'operator' => '==',
-                'value' => 'administrator',
             ),
         ),
     ),

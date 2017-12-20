@@ -35,11 +35,6 @@
                 'operator' => '==',
                 'value' => 'idea',
             ),
-            1 => array(
-                'param' => 'current_user_role',
-                'operator' => '==',
-                'value' => 'administrator',
-            ),
         ),
     ),
     'menu_order' => 0,
