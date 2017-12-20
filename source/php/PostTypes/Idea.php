@@ -112,7 +112,10 @@ class Idea extends \ModularityFormBuilder\PostType
             'has_archive'         => true,
             'query_var'           => true,
             'can_export'          => true,
-            'rewrite'             => true,
+            'rewrite'             => array(
+                'with_front' => false,
+                'slug' => $this->postTypeSlug
+            ),
             'capability_type'     => 'post',
             'capabilities' => array(
                 'create_posts'       => 'do_not_allow',
