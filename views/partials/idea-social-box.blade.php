@@ -1,4 +1,5 @@
 <div class="grid-xs-12">
+    <h4 class="box-title"><?php _e('Share page', 'idea-manager'); ?></h4>
     <span class="box box-card">
         <div class="box-content">
             <div class="grid share share-social share-social share-social-icon-lg share-horizontal share-no-labels">

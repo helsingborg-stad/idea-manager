@@ -6,6 +6,9 @@
     @if ($field['acf_fc_layout'] == 'file_upload' && is_array($field['value']))
         @include('partials.idea-docs-box')
     @endif
+    @if ($field['acf_fc_layout'] == 'sender-address' && is_array($field['value']))
+        @include('partials.idea-map-box')
+    @endif
 @endforeach
 
 @if ($showSocial === true)
