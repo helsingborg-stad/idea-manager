@@ -99,7 +99,7 @@ class Idea extends \ModularityFormBuilder\PostType
 
         $args = array(
             'labels'              => $labels,
-            'hierarchical'        => true,
+            'hierarchical'        => false,
             'description'         => 'Post type for managing ideas',
             'public'              => true,
             'show_ui'             => true,
