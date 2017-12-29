@@ -21,10 +21,41 @@ class Idea extends \ModularityFormBuilder\PostType
         $this->taxonomyTags();
 
         add_action('save_post_' . $this->postTypeSlug, array($this, 'setDefaultData'), 10, 3);
+        add_action('Municipio/blog/post_info', array($this, 'addIdeaStatusPost'), 9, 1);
+        add_filter('accessibility_items', array($this, 'addIdeaStatusPage'), 11, 1);
         add_filter('wp_insert_post_data', array($this, 'allowComments'), 99, 2);
         add_filter('dynamic_sidebar_before', array($this, 'contentBeforeSidebar'));
         add_filter('is_active_sidebar', array($this, 'isActiveSidebar'), 11, 2);
         add_filter('ModularityFormBuilder/excluded_fields/front', array($this, 'excludedFields'), 10, 3);
+    }
+
+    /**
+     * Filter for adding accessibility items
+     * @param  array $items Default item array
+     * @return array        Modified item array
+     */
+    public function addIdeaStatusPage($items)
+    {
+        global $post;
+
+        if (is_object($post) && is_singular() && $post->post_type == $this->postTypeSlug) {
+            $statuses = !is_wp_error(wp_get_post_terms($post->ID, 'idea_statuses')) ? wp_get_post_terms($post->ID, 'idea_statuses') : null;
+            if (!empty($statuses[0])) {
+                $items[] = '<span><i class="pricon pricon-info-o"></i> ' . $statuses[0]->name . '</span>';
+            }
+        }
+
+        return $items;
+    }
+
+    public function addIdeaStatusPost($post)
+    {
+        if (is_object($post) && is_singular() && $post->post_type == $this->postTypeSlug) {
+            $statuses = !is_wp_error(wp_get_post_terms($post->ID, 'idea_statuses')) ? wp_get_post_terms($post->ID, 'idea_statuses') : null;
+            if (!empty($statuses[0])) {
+                echo '<li><i class="pricon pricon-info-o"></i> ' . $statuses[0]->name . '</li>';
+            }
+        }
     }
 
     public function isIdeaPage()
@@ -290,5 +321,4 @@ class Idea extends \ModularityFormBuilder\PostType
 
         return $exclude;
     }
-
 }
