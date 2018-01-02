@@ -81,7 +81,7 @@ class Idea extends \ModularityFormBuilder\PostType
             return true;
         }
 
-       return $isActiveSidebar;
+        return $isActiveSidebar;
     }
 
     /**
@@ -100,6 +100,28 @@ class Idea extends \ModularityFormBuilder\PostType
             $uploadFolder = wp_upload_dir();
             $data['uploadFolder'] = $uploadFolder['baseurl'] . '/modularity-form-builder/';
             $data['profileImage'] = !empty($post->post_author) && get_the_author_meta('user_profile_picture', $post->post_author) ? \Municipio\Helper\Image::resize(get_the_author_meta('user_profile_picture', $post->post_author), 200, 200) : null;
+
+            // TODO Get related ideas from Hashtags instead
+            $tags = wp_get_post_terms($post->ID, 'idea_tags');
+            $tagIds = array();
+            if (!is_wp_error($tags) && !empty($tags)) {
+                foreach($tags as $tag) {
+                    $tagIds[] = $tag->term_id;
+                }
+            }
+
+            $data['relatedIdeas'] = get_posts(array(
+                'numberposts' => 4,
+                'post__not_in' => array($post->ID),
+                'post_type' => $this->postTypeSlug,
+                'tax_query' => array(
+                    array(
+                        'taxonomy' => 'idea_tags',
+                        'field' => 'term_id',
+                        'terms' => $tagIds,
+                    )
+                )
+            ));
 
             $this->renderBlade('idea-widgets.blade.php', array(IDEAMANAGER_TEMPLATE_PATH), $data);
         } elseif ($sidebar === 'bottom-sidebar' && $this->isIdeaPage()) {

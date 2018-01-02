@@ -14,3 +14,7 @@
 @if ($showSocial === true)
     @include('partials.idea-social-box')
 @endif
+
+@if (is_array($relatedIdeas) && !empty($relatedIdeas))
+    @include('partials.idea-related-box')
+@endif
