@@ -4,7 +4,7 @@
          <ul>
              @foreach($relatedIdeas as $post)
                  <li>
-                     <a href="{{ get_the_permalink($post->ID) }}" rel="bookmark" title="{{ get_the_title($post->ID) }}">{{ get_the_title($post->ID) }}</a>
+                     <a href="{{ get_the_permalink($post->ID) }}" class="link-item" rel="bookmark" title="{{ get_the_title($post->ID) }}">{{ get_the_title($post->ID) }}</a>
                  </li>
              @endforeach
         </ul>

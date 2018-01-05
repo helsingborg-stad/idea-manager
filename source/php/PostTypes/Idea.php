@@ -111,7 +111,7 @@ class Idea extends \ModularityFormBuilder\PostType
             }
 
             $data['relatedIdeas'] = get_posts(array(
-                'numberposts' => 4,
+                'numberposts' => 3,
                 'post__not_in' => array($post->ID),
                 'post_type' => $this->postTypeSlug,
                 'tax_query' => array(
@@ -151,31 +151,33 @@ class Idea extends \ModularityFormBuilder\PostType
         );
 
         $args = array(
-            'labels'              => $labels,
-            'hierarchical'        => false,
-            'description'         => 'Post type for managing ideas',
-            'public'              => true,
-            'show_ui'             => true,
-            'show_in_menu'        => true,
-            'show_in_admin_bar'   => false,
-            'menu_position'       => 50,
-            'menu_icon'           => 'dashicons-lightbulb',
-            'show_in_nav_menus'   => false,
-            'publicly_queryable'  => true,
-            'exclude_from_search' => false,
-            'has_archive'         => true,
-            'query_var'           => true,
-            'can_export'          => true,
-            'rewrite'             => array(
+            'labels'                => $labels,
+            'hierarchical'          => false,
+            'description'           => 'Post type for managing ideas',
+            'public'                => true,
+            'show_ui'               => true,
+            'show_in_menu'          => true,
+            'show_in_admin_bar'     => false,
+            'menu_position'         => 50,
+            'menu_icon'             => 'dashicons-lightbulb',
+            'show_in_nav_menus'     => false,
+            'publicly_queryable'    => true,
+            'exclude_from_search'   => false,
+            'has_archive'           => true,
+            'query_var'             => true,
+            'can_export'            => true,
+            'rewrite'               => array(
                 'with_front' => false,
                 'slug' => $this->postTypeSlug
             ),
-            'capability_type'     => 'post',
+            'capability_type'       => 'post',
             'capabilities' => array(
-                'create_posts'       => 'do_not_allow',
+                'create_posts'      => 'do_not_allow',
             ),
-            'map_meta_cap'        => true,
-            'supports'            => array('title', 'author', 'editor', 'comments', 'thumbnail')
+            'map_meta_cap'          => true,
+            'supports'              => array('title', 'author', 'editor', 'comments', 'thumbnail'),
+            'show_in_rest'          => true,
+            'rest_base'             => $this->postTypeSlug
         );
 
         register_post_type($this->postTypeSlug, $args);
