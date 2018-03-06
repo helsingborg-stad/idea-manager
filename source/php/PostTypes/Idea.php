@@ -18,7 +18,6 @@ class Idea extends \ModularityFormBuilder\PostType
         add_action('init', array($this, 'register'));
         $this->taxonomyStatus();
         $this->taxonomyAdministrationUnit();
-        $this->taxonomyTags();
 
         add_action('save_post_' . $this->postTypeSlug, array($this, 'setDefaultData'), 10, 3);
         add_action('Municipio/blog/post_info', array($this, 'addIdeaStatusPost'), 9, 1);
@@ -102,7 +101,7 @@ class Idea extends \ModularityFormBuilder\PostType
             $data['profileImage'] = !empty($post->post_author) && get_the_author_meta('user_profile_picture', $post->post_author) ? \Municipio\Helper\Image::resize(get_the_author_meta('user_profile_picture', $post->post_author), 200, 200) : null;
 
             // TODO Get related ideas from Hashtags instead
-            $tags = wp_get_post_terms($post->ID, 'idea_tags');
+            $tags = wp_get_post_terms($post->ID, 'hashtag');
             $tagIds = array();
             if (!is_wp_error($tags) && !empty($tags)) {
                 foreach($tags as $tag) {
@@ -117,7 +116,7 @@ class Idea extends \ModularityFormBuilder\PostType
                 'tax_query' => array(
                     array(
                         'taxonomy' => 'idea_tags',
-                        'field' => 'term_id',
+                        'field' => 'hashtag',
                         'terms' => $tagIds,
                     )
                 )
@@ -245,34 +244,6 @@ class Idea extends \ModularityFormBuilder\PostType
         //Add filter
         new \ModularityFormBuilder\Entity\Filter(
             $taxonomyAdminUnit->slug,
-            $this->postTypeSlug
-        );
-    }
-
-    /**
-     * Create tags taxonomy
-     * @return string
-     */
-    public function taxonomyTags()
-    {
-        // Register new taxonomy
-        $taxonomyStatus = new \ModularityFormBuilder\Entity\Taxonomy(
-            __('Tag', 'idea-manager'),
-            __('Tags', 'idea-manager'),
-            'idea_tags',
-            array($this->postTypeSlug),
-            array(
-                'hierarchical'      => false,
-                'public'            => true,
-                'show_ui'           => true,
-                'show_in_nav_menus' => true,
-                '_builtin'          => false,
-            )
-        );
-
-        //Add filter
-        new \ModularityFormBuilder\Entity\Filter(
-            $taxonomyStatus->slug,
             $this->postTypeSlug
         );
     }
