@@ -26,6 +26,7 @@ class Idea extends \ModularityFormBuilder\PostType
         add_filter('dynamic_sidebar_before', array($this, 'contentBeforeSidebar'));
         add_filter('is_active_sidebar', array($this, 'isActiveSidebar'), 11, 2);
         add_filter('ModularityFormBuilder/excluded_fields/front', array($this, 'excludedFields'), 10, 3);
+        add_filter('Municipio/taxonomy/tag_style', array($this, 'setStatusColor'), 10, 3);
     }
 
     /**
@@ -315,5 +316,25 @@ class Idea extends \ModularityFormBuilder\PostType
         }
 
         return $exclude;
+    }
+
+    /**
+     * Adds custom style to taxonomy tags
+     * @param string  $attr      Default style string
+     * @param string  $term      The term
+     * @param string  $taxonomy  Taxnomy name
+     * @param obj     $post      Post object
+     * @return string            Modified style string
+     */
+    public function setStatusColor($style, $term, $taxonomy)
+    {
+        if ($taxonomy == 'idea_statuses') {
+            $color = get_field('taxonomy_color', $term);
+            if (!empty($color)) {
+                $style .= sprintf('background:%s;color:#fff;', $color);
+            }
+        }
+
+        return $style;
     }
 }
