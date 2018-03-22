@@ -37,7 +37,8 @@ add_action('plugins_loaded', function () {
     $acfExportManager->setExportFolder(IDEAMANAGER_PATH . 'acf-fields/');
     $acfExportManager->autoExport(array(
         'idea_status' => 'group_5a134a48de846',
-		'administration_unit' => 'group_5a134bb83af1a'
+		'administration_unit' => 'group_5a134bb83af1a',
+        'tax_color' => 'group_5ab3a45759ba5'
     ));
     $acfExportManager->import();
 });
