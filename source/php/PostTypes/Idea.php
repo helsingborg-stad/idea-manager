@@ -157,10 +157,10 @@ class Idea extends \ModularityFormBuilder\PostType
             'public'                => true,
             'show_ui'               => true,
             'show_in_menu'          => true,
-            'show_in_admin_bar'     => false,
+            'show_in_admin_bar'     => true,
             'menu_position'         => 50,
             'menu_icon'             => 'dashicons-lightbulb',
-            'show_in_nav_menus'     => false,
+            'show_in_nav_menus'     => true,
             'publicly_queryable'    => true,
             'exclude_from_search'   => false,
             'has_archive'           => true,
@@ -170,11 +170,6 @@ class Idea extends \ModularityFormBuilder\PostType
                 'with_front' => false,
                 'slug' => $this->postTypeSlug
             ),
-            'capability_type'       => 'post',
-            'capabilities' => array(
-                'create_posts'      => 'do_not_allow',
-            ),
-            'map_meta_cap'          => true,
             'supports'              => array('title', 'author', 'editor', 'comments', 'thumbnail'),
             'show_in_rest'          => true,
             'rest_base'             => $this->postTypeSlug
@@ -310,8 +305,12 @@ class Idea extends \ModularityFormBuilder\PostType
     public function excludedFields($exclude, $postType, $postId)
     {
         if ($postType === $this->postTypeSlug) {
-            $exclude[] = 'file_upload';
+            $exclude[] = 'sender-firstname';
+            $exclude[] = 'sender-lastname';
+            $exclude[] = 'sender-email';
+            $exclude[] = 'sender-phone';
             $exclude[] = 'sender-address';
+            $exclude[] = 'file_upload';
             $exclude[] = 'input';
         }
 
