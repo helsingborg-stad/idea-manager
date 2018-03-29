@@ -4,7 +4,7 @@
     "fields": [
         {
             "key": "field_5a134c0718f79",
-            "label": "Idea status",
+            "label": "Status",
             "name": "idea_status",
             "type": "taxonomy",
             "instructions": "",

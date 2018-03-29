@@ -7,7 +7,7 @@
     'fields' => array(
         0 => array(
             'key' => 'field_5a134c0718f79',
-            'label' => __('Idea status', 'idea-manager'),
+            'label' => __('Status', 'idea-manager'),
             'name' => 'idea_status',
             'type' => 'taxonomy',
             'instructions' => '',
