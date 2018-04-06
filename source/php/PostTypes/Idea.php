@@ -18,6 +18,7 @@ class Idea extends \ModularityFormBuilder\PostType
         add_action('init', array($this, 'register'));
         $this->taxonomyStatus();
         $this->taxonomyAdministrationUnit();
+        $this->taxonomyCategory();
 
         add_action('save_post_' . $this->postTypeSlug, array($this, 'setDefaultData'), 10, 3);
         add_action('Municipio/blog/post_info', array($this, 'addIdeaStatusPost'), 9, 1);
@@ -243,6 +244,28 @@ class Idea extends \ModularityFormBuilder\PostType
         new \ModularityFormBuilder\Entity\Filter(
             $taxonomyAdminUnit->slug,
             $this->postTypeSlug
+        );
+    }
+
+    /**
+     * Create status taxonomy
+     * @return string
+     */
+    public function taxonomyCategory()
+    {
+        // Register new taxonomy
+        $taxonomyStatus = new \ModularityFormBuilder\Entity\Taxonomy(
+            __('Category', 'idea-manager'),
+            __('Categories', 'idea-manager'),
+            'idea_categories',
+            array($this->postTypeSlug),
+            array(
+                'hierarchical'      => true,
+                'public'            => true,
+                'show_ui'           => true,
+                'show_in_nav_menus' => true,
+                '_builtin'          => false,
+            )
         );
     }
 
