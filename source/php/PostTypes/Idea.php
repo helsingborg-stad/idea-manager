@@ -91,12 +91,14 @@ class Idea extends \ModularityFormBuilder\PostType
     public function contentBeforeSidebar($sidebar)
     {
         global $post;
+        $user = wp_get_current_user();
 
         if ($sidebar === 'right-sidebar' && $this->isIdeaPage()) {
             $data = $this->gatherFormData($post);
             $data['showSocial'] = get_field('post_show_share', $post->ID);
             $data['showAuthor'] = is_user_logged_in() && get_field('post_show_author', $post->ID) && $post->post_author > 0;
-            $data['units'] = !is_wp_error(wp_get_post_terms($post->ID, 'idea_administration_units')) ? wp_get_post_terms($post->ID, 'idea_administration_units') : null;
+            $data['authorUrl'] = function_exists('municipio_intranet_get_user_profile_url') ? municipio_intranet_get_user_profile_url($user->ID) : null;
+            $data['unit'] = class_exists('\Intranet\User\AdministrationUnits') && $user->ID ? \Intranet\User\AdministrationUnits::getUsersAdministrationUnitIntranet($user->ID) : null;
             $uploadFolder = wp_upload_dir();
             $data['uploadFolder'] = $uploadFolder['baseurl'] . '/modularity-form-builder/';
             $data['profileImage'] = !empty($post->post_author) && get_the_author_meta('user_profile_picture', $post->post_author) ? \Municipio\Helper\Image::resize(get_the_author_meta('user_profile_picture', $post->post_author), 200, 200) : null;
