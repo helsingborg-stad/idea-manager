@@ -16,7 +16,7 @@
                 "id": ""
             },
             "taxonomy": "idea_administration_units",
-            "field_type": "radio",
+            "field_type": "checkbox",
             "allow_null": 0,
             "add_term": 1,
             "save_terms": 1,
