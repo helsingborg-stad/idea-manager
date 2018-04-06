@@ -225,7 +225,7 @@ class Idea extends \ModularityFormBuilder\PostType
             array($this->postTypeSlug),
             array(
                 'hierarchical'      => false,
-                'public'            => false,
+                'public'            => true,
                 'show_ui'           => false,
                 'show_in_nav_menus' => false,
                 '_builtin'          => false,
