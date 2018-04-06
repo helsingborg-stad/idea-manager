@@ -95,7 +95,7 @@ class Idea extends \ModularityFormBuilder\PostType
         if ($sidebar === 'right-sidebar' && $this->isIdeaPage()) {
             $data = $this->gatherFormData($post);
             $data['showSocial'] = get_field('post_show_share', $post->ID);
-            $data['showAuthor'] = get_field('post_show_author', $post->ID) && $post->post_author > 0;
+            $data['showAuthor'] = is_user_logged_in() && get_field('post_show_author', $post->ID) && $post->post_author > 0;
             $data['units'] = !is_wp_error(wp_get_post_terms($post->ID, 'idea_administration_units')) ? wp_get_post_terms($post->ID, 'idea_administration_units') : null;
             $uploadFolder = wp_upload_dir();
             $data['uploadFolder'] = $uploadFolder['baseurl'] . '/modularity-form-builder/';
