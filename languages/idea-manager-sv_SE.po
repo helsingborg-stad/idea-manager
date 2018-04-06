@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Idea Manager\n"
-"POT-Creation-Date: 2018-03-29 13:09+0200\n"
-"PO-Revision-Date: 2018-03-29 13:09+0200\n"
+"POT-Creation-Date: 2018-04-06 09:54+0200\n"
+"PO-Revision-Date: 2018-04-06 09:54+0200\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: sv\n"
@@ -98,6 +98,10 @@ msgstr "Statusar"
 #: source/php/PostTypes/Idea.php:223
 msgid "Administration units"
 msgstr "Förvaltningar"
+
+#: source/php/PostTypes/Idea.php:251
+msgid "Incoming"
+msgstr "Inkommande"
 
 #: source/php/PostTypes/Idea.php:300
 msgid "Title"

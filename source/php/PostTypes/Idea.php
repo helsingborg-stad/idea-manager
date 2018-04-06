@@ -248,7 +248,7 @@ class Idea extends \ModularityFormBuilder\PostType
     {
         if (!$update) {
             // Set default status
-            wp_set_object_terms($postId, 'Ej läst', 'idea_statuses');
+            wp_set_object_terms($postId, __('Incoming', 'idea-manager'), 'idea_statuses');
             // Hide Share icons
             update_field('field_56c33d008efe3', false, $postId);
             // Hide Author
