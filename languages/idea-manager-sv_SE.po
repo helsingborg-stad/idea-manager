@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Idea Manager\n"
-"POT-Creation-Date: 2018-04-06 09:54+0200\n"
-"PO-Revision-Date: 2018-04-06 09:54+0200\n"
+"POT-Creation-Date: 2018-04-12 08:54+0200\n"
+"PO-Revision-Date: 2018-04-12 08:54+0200\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: sv\n"
@@ -22,12 +22,12 @@ msgstr ""
 "X-Poedit-SearchPathExcluded-0: *.js\n"
 
 #: acf-fields/php/administration_unit.php:6
-#: acf-fields/php/administration_unit.php:10 source/php/PostTypes/Idea.php:222
+#: acf-fields/php/administration_unit.php:10 source/php/PostTypes/Idea.php:224
 msgid "Administration unit"
 msgstr "Förvaltning"
 
 #: acf-fields/php/idea_status.php:6 acf-fields/php/idea_status.php:10
-#: source/php/PostTypes/Idea.php:189
+#: source/php/PostTypes/Idea.php:191
 msgid "Status"
 msgstr "Status"
 
@@ -51,63 +51,71 @@ msgstr "Idé"
 msgid "Ideas"
 msgstr "Idéer"
 
-#: source/php/PostTypes/Idea.php:141 source/php/PostTypes/Idea.php:142
+#: source/php/PostTypes/Idea.php:143 source/php/PostTypes/Idea.php:144
 #, php-format
 msgid "Add new %s"
 msgstr "Skapa ny %s"
 
-#: source/php/PostTypes/Idea.php:143
+#: source/php/PostTypes/Idea.php:145
 #, php-format
 msgid "Edit %s"
 msgstr "Redigera %s"
 
-#: source/php/PostTypes/Idea.php:144
+#: source/php/PostTypes/Idea.php:146
 #, php-format
 msgid "New %s"
 msgstr "Ny %s"
 
-#: source/php/PostTypes/Idea.php:145
+#: source/php/PostTypes/Idea.php:147
 #, php-format
 msgid "View %s"
 msgstr "Visa %s"
 
-#: source/php/PostTypes/Idea.php:146
+#: source/php/PostTypes/Idea.php:148
 #, php-format
 msgid "Search %s"
 msgstr "Sök %s"
 
-#: source/php/PostTypes/Idea.php:147
+#: source/php/PostTypes/Idea.php:149
 #, php-format
 msgid "No %s found"
 msgstr "Inga %s hittades"
 
-#: source/php/PostTypes/Idea.php:148
+#: source/php/PostTypes/Idea.php:150
 #, php-format
 msgid "No %s found in trash"
 msgstr "Inga %s hittades i papperskorgen"
 
-#: source/php/PostTypes/Idea.php:149
+#: source/php/PostTypes/Idea.php:151
 #, php-format
 msgid "Parent %s:"
 msgstr "Förälder %s:"
 
-#: source/php/PostTypes/Idea.php:190
+#: source/php/PostTypes/Idea.php:192
 msgid "Statuses"
 msgstr "Statusar"
 
-#: source/php/PostTypes/Idea.php:223
+#: source/php/PostTypes/Idea.php:225
 msgid "Administration units"
 msgstr "Förvaltningar"
 
-#: source/php/PostTypes/Idea.php:251
+#: source/php/PostTypes/Idea.php:257
+msgid "Category"
+msgstr "Kategori"
+
+#: source/php/PostTypes/Idea.php:258
+msgid "Categories"
+msgstr "Kategorier"
+
+#: source/php/PostTypes/Idea.php:275
 msgid "Incoming"
 msgstr "Inkommande"
 
-#: source/php/PostTypes/Idea.php:300
+#: source/php/PostTypes/Idea.php:324
 msgid "Title"
 msgstr "Titel"
 
-#: source/php/PostTypes/Idea.php:301
+#: source/php/PostTypes/Idea.php:325
 msgid "Date"
 msgstr "Datum"
 
