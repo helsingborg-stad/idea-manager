@@ -11,6 +11,7 @@ class App
         add_action('plugins_loaded', function () {
             if (class_exists('\\ModularityFormBuilder\\PostType')) {
                 new PostTypes\Idea();
+                new Shortcode();
             }
         });
     }
@@ -40,7 +41,7 @@ class App
      */
     public function addTemplatePaths($array)
     {
-        $array[] = IDEAMANAGER_TEMPLATE_PATH;
+        $array[] = IDEAMANAGER_VIEW_PATH;
         return $array;
     }
 }

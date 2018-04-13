@@ -20,7 +20,8 @@ if (! defined('WPINC')) {
 
 define('IDEAMANAGER_PATH', plugin_dir_path(__FILE__));
 define('IDEAMANAGER_URL', plugins_url('', __FILE__));
-define('IDEAMANAGER_TEMPLATE_PATH', IDEAMANAGER_PATH . 'views/');
+define('IDEAMANAGER_VIEW_PATH', IDEAMANAGER_PATH . 'views/');
+define('IDEAMANAGER_CACHE_DIR', trailingslashit(wp_upload_dir()['basedir']) . 'cache/blade-cache/');
 
 load_plugin_textdomain('idea-manager', false, plugin_basename(dirname(__FILE__)) . '/languages');
 
