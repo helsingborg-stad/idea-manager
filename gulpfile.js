@@ -33,7 +33,7 @@ gulp.task('sass-dev', function() {
 // Concatenate & Minify JS
 gulp.task('scripts-dist', function() {
     gulp.src([
-            'source/js/**/*.js',
+            'source/js/front/**/*.js',
         ])
         .pipe(concat('idea-manager.dev.js'))
         .pipe(gulp.dest('dist/js'))

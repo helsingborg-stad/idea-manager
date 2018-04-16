@@ -44,4 +44,5 @@ class App
         $array[] = IDEAMANAGER_VIEW_PATH;
         return $array;
     }
+
 }
