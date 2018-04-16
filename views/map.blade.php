@@ -9,49 +9,80 @@
           width: 100%;
         }
         #areaMap {
-          height: 400px;
+          height: 350px;
           margin-bottom: 30px;
+        }
+        #areaMap p {
+          margin-top: 0px;
         }
       </style>
 
-      <div class="area-map c-area-map t-area-map">
-          <div id="areaMap"></div>
-          <script>
-            function areaInitMap() {
-              //Declare stuff
-              var marker, item, map;
-              //Create new map
-              map = new google.maps.Map(document.getElementById('areaMap'), {
-                zoom: 14,
-                center: {!!json_encode($center)!!},
-                disableDefaultUI: false
-              });
-              for(var item in jsonPlots) {
-                //Get details about pin
-                name  = jsonPlots[item].location;
-                info  = jsonPlots[item].excerpt;
-                link  = jsonPlots[item].permalink;
-                //Append html markup for infowindow
-                jsonPlots[item].info  = '<h3>' + name + '</h3>' + '<a target="_top" class="btn btn-md btn-primary" href="' + link + '"><?php _e("Read more", 'idea'); ?></a>';
+    <div class="area-map">
+    	<div id="areaMap"></div>
 
-                //Create new marker
-                marker = new google.maps.Marker({
-                    position: new google.maps.LatLng(jsonPlots[item].geo.lat,jsonPlots[item].geo.lng),
-                    name: name,
-                    map: map
-                });
-                //Add infowindow trigger
-                google.maps.event.addListener(marker, 'click', (function(marker, item) {
-                  return function() {
-                      var infoWindow = new google.maps.InfoWindow();
-                      infoWindow.setContent(jsonPlots[item].info);
-                      infoWindow.open(map, marker);
-                  }
-                })(marker, item));
-              }
-            }
-          </script>
-          <script async defer src="https://maps.googleapis.com/maps/api/js?key={{ G_GEOCODE_KEY }}&callback=areaInitMap"></script>
+    <script>
+	function areaInitMap() {
+		var markers = [],
+	    	mapOptions = {
+	        zoom: 14,
+	        center: {!!json_encode($center)!!},
+	        panControl: false,
+	        zoomControl: true,
+	        mapTypeControl: false,
+	        scaleControl: false,
+	        streetViewControl: false,
+	        overviewMapControl: false,
+	        mapTypeId: google.maps.MapTypeId.ROADMAP
+	    	},
+	    	map = new google.maps.Map(document.getElementById('areaMap'), mapOptions),
+	    	iw = new google.maps.InfoWindow({maxWidth: 330});
+
+	    function iwClose() { iw.close(); }
+	    google.maps.event.addListener(map, 'click', iwClose);
+
+		var oms = new OverlappingMarkerSpiderfier(map, {
+	        markersWontMove: true,
+	        markersWontHide: true,
+      	});
+
+		for (var i = 0, len = jsonPlots.length; i < len; i ++) {
+			(function() {
+				var markerData = jsonPlots[i];
+				var html = '<h3>' + markerData.location + '</h3><p>' + markerData.excerpt + '</p><br><a target="_top" class="btn btn-md btn-primary" href="' + markerData.permalink + '"><?php _e("Read more", 'idea-manager'); ?></a>';
+				var latLng = new google.maps.LatLng(markerData.geo.lat,markerData.geo.lng);
+				var marker = new google.maps.Marker({
+					position: latLng,
+					title: markerData.location
+				});
+				google.maps.event.addListener(marker, 'click', iwClose);
+				oms.addMarker(marker, function(e) {
+					iw.setContent(html);
+					iw.open(map, marker);
+				});
+				markers.push(marker);
+			})();
+		}
+
+		// for debugging/exploratory use in console
+		window.map = map;
+		window.oms = oms;
+
+	    // Make a cluster with the markers from the array
+	    var imgPath = '{!! IDEAMANAGER_URL !!}/source/assets/images/';
+	    var markerCluster = new MarkerClusterer(map, markers, { imagePath: imgPath, zoomOnClick: true, maxZoom: 17, gridSize: 20 });
+
+	    google.maps.event.addListener(map, 'zoom_changed',
+			function() {
+				if (map.getZoom() > 18) {
+				map.setZoom(18);
+			};
+		});
+	}
+	</script>
+
+     	<script src="{!! IDEAMANAGER_URL !!}/source/js/vendor/MarkerClusterer.min.js"></script>
+     	<script src="{!! IDEAMANAGER_URL !!}/source/js/vendor/OverlappingMarkerSpiderfier.min.js"></script>
+        <script async defer src="https://maps.googleapis.com/maps/api/js?key={!! G_GEOCODE_KEY !!}&callback=areaInitMap"></script>
     </div>
 </div>
 @endif
