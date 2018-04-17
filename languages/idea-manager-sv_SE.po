@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Idea Manager\n"
-"POT-Creation-Date: 2018-04-12 08:54+0200\n"
-"PO-Revision-Date: 2018-04-12 08:54+0200\n"
+"POT-Creation-Date: 2018-04-17 08:46+0200\n"
+"PO-Revision-Date: 2018-04-17 08:46+0200\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: sv\n"
@@ -118,6 +118,10 @@ msgstr "Titel"
 #: source/php/PostTypes/Idea.php:325
 msgid "Date"
 msgstr "Datum"
+
+#: views/map.blade.php:51
+msgid "Read more"
+msgstr "Läs mer"
 
 #: views/partials/idea-map-box.blade.php:2
 msgid "Location"

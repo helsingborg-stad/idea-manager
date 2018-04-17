@@ -125,9 +125,9 @@ class Idea extends \ModularityFormBuilder\PostType
                 )
             ));
 
-            $this->renderBlade('idea-widgets.blade.php', array(IDEAMANAGER_VIEW_PATH), $data);
+            echo \IdeaManager\App::blade('idea-widgets', $data);
         } elseif ($sidebar === 'bottom-sidebar' && $this->isIdeaPage()) {
-            $this->renderBlade('idea-mail-modal.blade.php', array(IDEAMANAGER_VIEW_PATH));
+            echo \IdeaManager\App::blade('idea-mail-modal');
         }
     }
 

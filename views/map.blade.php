@@ -1,6 +1,6 @@
-@if(isset($data) && is_array($data) && !empty($data))
+@if(isset($locations) && is_array($locations) && !empty($locations))
     <script>
-      var jsonPlots = {!!json_encode($data)!!}
+      var jsonPlots = {!!json_encode($locations)!!}
     </script>
 
 	<div class="gutter gutter-top">

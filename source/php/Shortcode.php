@@ -2,8 +2,6 @@
 
 namespace IdeaManager;
 
-use Philo\Blade\Blade as Blade;
-
 class Shortcode
 {
     public function __construct()
@@ -68,14 +66,14 @@ class Shortcode
 
         //Add view
         if (isset($center) && !empty($center) && isset($result) && !empty($result)) {
-            $blade = new Blade(IDEAMANAGER_VIEW_PATH, IDEAMANAGER_CACHE_DIR);
-            echo $blade->view()->make('map', array('data' => $result, 'center' => $center))->render();
+        	$data = array('locations' => $result, 'center' => $center);
+        	echo \IdeaManager\App::blade('map', $data);
         }
     }
 
     public function getCoordinates($address)
     {
-        $url = 'https://maps.googleapis.com/maps/api/geocode/json?address=' . urlencode($address) . '&key=AIzaSyDVO1IFPaHweJa4n5cWUu4bTM5lnWbAc7k';
+        $url = 'https://maps.googleapis.com/maps/api/geocode/json?address=' . urlencode($address) . '&key=';
         $data = json_decode(file_get_contents($url));
         $coordinates = array();
 
