@@ -8,11 +8,9 @@ IdeaManager.Idea.ideaCLuster = (function ($) {
             return;
         }
 
-        console.log("ideaCLuster");
-
         var markers = [],
             mapOptions = {
-            zoom: 14,
+            zoom: 12,
             center: ideaManager.cluster.center,
             panControl: false,
             zoomControl: true,
