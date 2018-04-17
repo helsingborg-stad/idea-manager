@@ -4,6 +4,10 @@ IdeaManager.Idea = IdeaManager.Idea || {};
 IdeaManager.Idea.renderMap = (function ($) {
 
     function RenderMap() {
+        if (!$('.idea-location').length) {
+            return;
+        }
+
         var geocoder,
             map,
             $mapTargets = $('.idea-location__map');

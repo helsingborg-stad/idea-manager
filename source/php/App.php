@@ -26,14 +26,15 @@ class App
         global $post;
 
         wp_register_script('idea-manager', IDEAMANAGER_URL . '/dist/js/idea-manager.min.js', array('jQuery'), '', true);
+        if (defined('G_GEOCODE_KEY') && G_GEOCODE_KEY) {
+            wp_register_script('google-maps-api', '//maps.googleapis.com/maps/api/js?key=' . G_GEOCODE_KEY . '', array(), '', true);
+        }
+        wp_register_style('idea-manager', IDEAMANAGER_URL . '/dist/css/idea-manager.min.css');
 
         if (is_object($post) && $post->post_type == 'idea' && is_singular('idea')) {
             wp_enqueue_script('idea-manager');
-            wp_enqueue_style('idea-manager', IDEAMANAGER_URL . '/dist/css/idea-manager.min.css');
-
-            if (defined('G_GEOCODE_KEY') && G_GEOCODE_KEY) {
-                wp_enqueue_script('google-maps-api', '//maps.googleapis.com/maps/api/js?key=' . G_GEOCODE_KEY . '', array(), '', true);
-            }
+            wp_enqueue_style('idea-manager');
+            wp_enqueue_script('google-maps-api');
         }
     }
 
