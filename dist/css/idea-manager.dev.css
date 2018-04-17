@@ -2,3 +2,11 @@
   height: 200px; }
   .idea-location__map {
     height: 100%; }
+
+.idea-cluster {
+  width: 100%; }
+  .idea-cluster #idea-cluster-map {
+    height: 350px;
+    margin: 30px 0 30px 0; }
+    .idea-cluster #idea-cluster-map p {
+      margin-top: 0px; }
