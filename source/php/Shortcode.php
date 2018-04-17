@@ -5,7 +5,6 @@ namespace IdeaManager;
 class Shortcode
 {
 	private $locations;
-    private $center;
 
     public function __construct()
     {
@@ -36,41 +35,21 @@ class Shortcode
             foreach ($ideas as $idea) {
                 $formData = get_post_meta($idea->ID, 'form-data', true);
                 $senderAddress = $formData['adress'] ?? $formData['address'] ?? null;
-                if (is_array($senderAddress)) {
-                    $addressString = implode(',', $senderAddress);
-                    $coordinates = $this->getCoordinates($addressString);
-                    if ($coordinates) {
-                        $result[] = array(
-                            'location' => $idea->post_title,
-                            'geo' => $coordinates,
-                       		'excerpt' => wp_trim_words($idea->post_content, 30),
-                            'permalink' => get_permalink($idea->ID)
-                        );
-                    }
+                if (is_array($senderAddress) && !empty($senderAddress)) {
+                    $senderAddress = implode(',', $senderAddress);
+                    $result[] = array(
+                        'title' 	=> $idea->post_title,
+                        'address' 	=> $senderAddress,
+                   		'excerpt' 	=> wp_trim_words($idea->post_content, 30),
+                        'permalink' => get_permalink($idea->ID)
+                    );
                 }
             }
         }
 
-        // Get center of all points
-        if (is_array($result) && !empty($result)) {
-            $lat = (float) 0;
-            $lng = (float) 0;
-            // Sum all lat lng
-            foreach ($result as $latLngItem) {
-                $lat = $lat + (float) $latLngItem['geo']['lat'];
-                $lng = $lng + (float) $latLngItem['geo']['lng'];
-            }
-            // Calc center position
-            $center = array(
-                'lat' => $lat/count($result),
-                'lng' => $lng/count($result)
-            );
-        }
-
         // Display map
-        if (isset($center) && !empty($center) && isset($result) && !empty($result)) {
+        if (!empty($result)) {
         	$this->locations = $result;
-        	$this->center = $center;
         	$this->shortcodeScripts();
         	echo '<div class="idea-cluster"><div id="idea-cluster-map"></div></div>';
         }
@@ -88,25 +67,10 @@ class Shortcode
 	    	wp_localize_script('idea-manager', 'ideaManager', array(
 	    		'cluster' => array(
 	    			'locations' => $this->locations,
-	    			'center' => $this->center,
 	    			'iconPath' => IDEAMANAGER_URL . '/source/assets/images/'
 	    		),
 	    		'readMore' => __('Read more', 'idea-manager')
 			));
 		});
-    }
-
-    public function getCoordinates($address)
-    {
-        $url = 'https://maps.googleapis.com/maps/api/geocode/json?address=' . urlencode($address) . '&key=AIzaSyDTzuHi0a-nqoXymo79QfQewSRhXf2EPik';
-        $data = json_decode(file_get_contents($url));
-        $coordinates = array();
-
-        if (isset($data->status) && $data->status == 'OK') {
-            $coordinates['lat'] = $data->results[0]->geometry->location->lat;
-            $coordinates['lng'] = $data->results[0]->geometry->location->lng;
-        }
-
-        return $coordinates;
     }
 }
