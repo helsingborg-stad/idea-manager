@@ -1,23 +1,30 @@
 IdeaManager = IdeaManager || {};
 IdeaManager.Idea = IdeaManager.Idea || {};
 
-IdeaManager.Idea.renderMap = (function ($) {
+IdeaManager.Idea.singleMap = (function ($) {
 
-    function RenderMap() {
-        if (!$('.idea-location').length) {
-            return;
-        }
+    function singleMap() {
+        $(function() {
+            if (!$('.idea-map').length) {
+                return;
+            }
+            this.init();
+        }.bind(this));
+    }
 
+    singleMap.prototype.init = function() {
         var geocoder,
             map,
-            $mapTargets = $('.idea-location__map');
+            $mapTargets = $('.idea-map'),
+            geocoder = new google.maps.Geocoder(),
+            streetAddress;
 
-        geocoder = new google.maps.Geocoder();
+        // Loop over each target if target div is rendered multiple times
         $.each($mapTargets, function(i, value) {
-            var address = $(value).attr('data-location');
+            var address = $(value).data('location');
             geocoder.geocode({'address': address}, function(results, status) {
                 if (status == 'OK') {
-                    var streetAddress = address.substr(0, address.indexOf(','));
+                    $('.single-idea-map').show();
 
                     var mapOptions = {
                         zoom: 15,
@@ -28,7 +35,7 @@ IdeaManager.Idea.renderMap = (function ($) {
                     };
 
                     map = new google.maps.Map($mapTargets[i], mapOptions);
-
+                    streetAddress = address.substr(0, address.indexOf(','));
                     var infowindow = new google.maps.InfoWindow({
                         content: '<b>' + streetAddress + '</b>'
                     });
@@ -47,14 +54,11 @@ IdeaManager.Idea.renderMap = (function ($) {
                     marker.addListener('click', function() {
                         infowindow.open(map, marker);
                     });
-                } else {
-                    console.log('Error; Geocode was not successful: ' + status);
-                    $('#location-box').parents("div[class^='grid-']").hide();
                 }
             });
         });
     }
 
-    return new RenderMap();
+    return new singleMap();
 
 })(jQuery);

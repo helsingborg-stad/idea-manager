@@ -1,8 +1,9 @@
-.idea-location {
-    height: 200px;
+.single-idea-map {
+  	display: none;
 
-    &__map {
-        height: 100%;
+    .idea-map {
+    	width: 100%;
+        height: 200px;
     }
 }
 
