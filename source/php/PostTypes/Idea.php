@@ -2,24 +2,19 @@
 
 namespace IdeaManager\PostTypes;
 
-class Idea extends \ModularityFormBuilder\PostType
+class Idea
 {
-    public $nameSingular;
-    public $namePlural;
+    public $postTypeSlug;
 
     public function __construct()
     {
-        $this->nameSingular = __('Idea', 'idea-manager');
-        $this->namePlural   = __('Ideas', 'idea-manager');
         $this->postTypeSlug = 'idea';
 
-        parent::__construct();
-
-        add_action('init', array($this, 'register'));
         $this->taxonomyStatus();
         $this->taxonomyAdministrationUnit();
         $this->taxonomyCategory();
 
+        add_action('init', array($this, 'register'), 9);
         add_action('save_post_' . $this->postTypeSlug, array($this, 'setDefaultData'), 10, 3);
         add_action('Municipio/blog/post_info', array($this, 'addIdeaStatusPost'), 9, 1);
         add_filter('accessibility_items', array($this, 'addIdeaStatusPage'), 11, 1);
@@ -28,6 +23,7 @@ class Idea extends \ModularityFormBuilder\PostType
         add_filter('is_active_sidebar', array($this, 'isActiveSidebar'), 11, 2);
         add_filter('ModularityFormBuilder/excluded_fields/front', array($this, 'excludedFields'), 10, 3);
         add_filter('Municipio/taxonomy/tag_style', array($this, 'setStatusColor'), 10, 3);
+        add_filter('manage_edit-' . $this->postTypeSlug . '_columns', array($this, 'tableColumns'));
     }
 
     /**
@@ -94,7 +90,7 @@ class Idea extends \ModularityFormBuilder\PostType
         global $post;
 
         if ($sidebar === 'right-sidebar' && $this->isIdeaPage()) {
-            $data = $this->gatherFormData($post);
+            $data = \ModularityFormBuilder\Entity\PostType::gatherFormData($post);
             $data['showSocial'] = get_field('post_show_share', $post->ID);
             $data['showAuthor'] = is_user_logged_in() && get_field('post_show_author', $post->ID) && $post->post_author > 0;
             $data['authorUrl'] = function_exists('municipio_intranet_get_user_profile_url') ? municipio_intranet_get_user_profile_url($post->post_author) : null;
@@ -103,7 +99,6 @@ class Idea extends \ModularityFormBuilder\PostType
             $data['uploadFolder'] = $uploadFolder['baseurl'] . '/modularity-form-builder/';
             $data['profileImage'] = !empty($post->post_author) && get_the_author_meta('user_profile_picture', $post->post_author) ? \Municipio\Helper\Image::resize(get_the_author_meta('user_profile_picture', $post->post_author), 200, 200) : null;
 
-            // TODO Get related ideas from Hashtags instead
             $tags = wp_get_post_terms($post->ID, 'hashtag');
             $tagIds = array();
             if (!is_wp_error($tags) && !empty($tags)) {
@@ -137,23 +132,7 @@ class Idea extends \ModularityFormBuilder\PostType
      */
     public function register()
     {
-        $labels = array(
-            'name'                => $this->nameSingular,
-            'singular_name'       => $this->nameSingular,
-            'add_new'             => sprintf(__('Add new %s', 'idea-manager'), $this->nameSingular),
-            'add_new_item'        => sprintf(__('Add new %s', 'idea-manager'), $this->nameSingular),
-            'edit_item'           => sprintf(__('Edit %s', 'idea-manager'), $this->nameSingular),
-            'new_item'            => sprintf(__('New %s', 'idea-manager'), $this->nameSingular),
-            'view_item'           => sprintf(__('View %s', 'idea-manager'), $this->nameSingular),
-            'search_items'        => sprintf(__('Search %s', 'idea-manager'), $this->namePlural),
-            'not_found'           => sprintf(__('No %s found', 'idea-manager'), $this->namePlural),
-            'not_found_in_trash'  => sprintf(__('No %s found in trash', 'idea-manager'), $this->namePlural),
-            'parent_item_colon'   => sprintf(__('Parent %s:', 'idea-manager'), $this->nameSingular),
-            'menu_name'           => $this->namePlural,
-        );
-
         $args = array(
-            'labels'                => $labels,
             'hierarchical'          => false,
             'description'           => 'Post type for managing ideas',
             'public'                => true,
@@ -177,7 +156,12 @@ class Idea extends \ModularityFormBuilder\PostType
             'rest_base'             => $this->postTypeSlug
         );
 
-        register_post_type($this->postTypeSlug, $args);
+        new \ModularityFormBuilder\Entity\PostType(
+            $this->postTypeSlug,
+            __('Idea', 'idea-manager'),
+            __('Ideas', 'idea-manager'),
+            $args
+        );
     }
 
     /**

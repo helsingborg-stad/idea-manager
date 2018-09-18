@@ -10,7 +10,7 @@ class App
     {
         add_action('wp_enqueue_scripts', array($this, 'script'), 5);
         add_action('plugins_loaded', function () {
-            if (class_exists('\\ModularityFormBuilder\\PostType')) {
+            if (class_exists('\\ModularityFormBuilder\\Entity\\PostType')) {
                 new PostTypes\Idea();
                 new Shortcode();
             }
