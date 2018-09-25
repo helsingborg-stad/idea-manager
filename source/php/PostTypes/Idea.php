@@ -23,7 +23,7 @@ class Idea
         add_filter('is_active_sidebar', array($this, 'isActiveSidebar'), 11, 2);
         add_filter('ModularityFormBuilder/excluded_fields/front', array($this, 'excludedFields'), 10, 3);
         add_filter('Municipio/taxonomy/tag_style', array($this, 'setStatusColor'), 10, 3);
-        add_filter('manage_edit-' . $this->postTypeSlug . '_columns', array($this, 'tableColumns'));
+        add_filter('manage_edit-' . $this->postTypeSlug . '_columns', array($this, 'tableColumns'), 11);
         add_filter('ModularityFormBuilder/options/post_types', array($this, 'addSelectablePostType'));
     }
 
