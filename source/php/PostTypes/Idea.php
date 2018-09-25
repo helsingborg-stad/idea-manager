@@ -24,6 +24,7 @@ class Idea
         add_filter('ModularityFormBuilder/excluded_fields/front', array($this, 'excludedFields'), 10, 3);
         add_filter('Municipio/taxonomy/tag_style', array($this, 'setStatusColor'), 10, 3);
         add_filter('manage_edit-' . $this->postTypeSlug . '_columns', array($this, 'tableColumns'));
+        add_filter('ModularityFormBuilder/options/post_types', array($this, 'addSelectablePostType'));
     }
 
     /**
@@ -343,5 +344,16 @@ class Idea
         }
 
         return $style;
+    }
+
+    /**
+     * Add Idea post type to selectable post types option
+     * @param $postTypes
+     * @return array
+     */
+    public function addSelectablePostType($postTypes)
+    {
+        $postTypes[$this->postTypeSlug] = __('Ideas', 'idea-manager');
+        return $postTypes;
     }
 }
