@@ -134,7 +134,10 @@ class Idea
             ),
             'supports'              => array('title', 'author', 'editor', 'comments', 'thumbnail'),
             'show_in_rest'          => true,
-            'rest_base'             => $this->postTypeSlug
+            'rest_base'             => $this->postTypeSlug,
+            'capabilities' => array(
+                'create_posts' => 'edit_posts',
+            ),
         );
 
         new \ModularityFormBuilder\Entity\PostType(
